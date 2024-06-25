@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -36,8 +37,15 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/customers-datatable', [CustomerController::class, 'getCustomersDataTable']);
 });
 Route::middleware(['auth:web', 'role:Admin'])->group(function () {
+    //fasilitas managemen
+    Route::get('/fasilitas', [FasilitasController::class, 'index'])->name('fasilitas');
+    Route::post('/fasilitas/store',  [FasilitasController::class, 'store'])->name('fasilitas.store');
+    Route::get('/fasilitas/edit/{id}',  [FasilitasController::class, 'edit'])->name('fasilitas.edit');
+    Route::delete('/fasilitas/delete/{id}',  [FasilitasController::class, 'destroy'])->name('fasilitas.delete');
+    Route::get('/fasilitas-datatable', [FasilitasController::class, 'getFasilitasDataTable']);
     //user managemen
     Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::get('/users/teknisi', [UserController::class, 'teknisi'])->name('users.teknisi');
     Route::post('/users/store',  [UserController::class, 'store'])->name('users.store');
     Route::get('/users/edit/{id}',  [UserController::class, 'edit'])->name('users.edit');
     Route::delete('/users/delete/{id}',  [UserController::class, 'destroy'])->name('users.delete');

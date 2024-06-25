@@ -22,6 +22,15 @@ class UserController extends Controller
         ];
         return view('admin.users.index', $data);
     }
+    public function teknisi()
+    {
+        $data = [
+            'title' => 'Data Teknisi',
+            'role' => 'Teknisi',
+            'users' => User::all()
+        ];
+        return view('admin.users.teknisi', $data);
+    }
     public function getUsersDataTable()
     {
         $users = User::select(['id', 'name', 'email', 'created_at', 'updated_at', 'role', 'avatar'])->orderByDesc('id');

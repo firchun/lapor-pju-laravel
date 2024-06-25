@@ -107,9 +107,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('customers') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('customers*') ? 'active' : '' }}">
-                        <span class="micon bi bi-person"></span><span class="mtext">Customers</span>
+                    <a href="{{ route('fasilitas') }}"
+                        class="dropdown-toggle no-arrow {{ request()->is('fasilitas*') ? 'active' : '' }}">
+                        <span class="micon bi bi-lamp"></span><span class="mtext">Fasilitas PJU</span>
                     </a>
                 </li>
                 <li class="dropdown">
@@ -117,9 +117,10 @@
                         <span class="micon bi bi-people"></span><span class="mtext">Pengguna</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="{{ route('users') }}"
-                                class="{{ request()->is('users') ? 'active' : '' }}">Pengguna</a></li>
-
+                        <li>
+                            <a href="{{ route('users') }}"
+                                class="{{ request()->is('users') ? 'active' : '' }}">Teknisi</a>
+                        </li>
                     </ul>
                 </li>
 
