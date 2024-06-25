@@ -14,7 +14,7 @@
                     <form class="tab-wizard2 wizard-circle p-3" method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="login-title mb-4">
-                            <h2 class="text-center text-primary">Register To {{ env('APP_NAME') }}</h2>
+                            <h2 class="text-center text-warning">Register To {{ env('APP_NAME') }}</h2>
                         </div>
                         <div class="form-group ">
                             <label class="col-form-label">Email Address*</label>
@@ -56,12 +56,12 @@
                                     id="password-confirm" />
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+                        <button type="submit" class="btn btn-warning btn-lg btn-block">Register</button>
                         <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
                             OR
                         </div>
                         <div class="input-group mb-0">
-                            <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('login') }}">Already your
+                            <a class="btn btn-outline-warning btn-lg btn-block" href="{{ route('login') }}">Already your
                                 account?</a>
                         </div>
                     </form>

@@ -8,12 +8,9 @@
     <title>Authentication - {{ env('APP_NAME') ?? 'Laravel' }} </title>
 
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="{{ asset('backend_theme/') }}/vendors/images/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32"
-        href="{{ asset('backend_theme/') }}/vendors/images/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="{{ asset('backend_theme/') }}/vendors/images/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/logo.png') }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/logo.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/logo.png') }}" />
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -49,15 +46,15 @@
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="brand-logo">
                 <a href="{{ url('/') }}">
-                    <img src="{{ asset('backend_theme/') }}/vendors/images/deskapp-logo.svg" alt="" />
+                    <img src="{{ asset('img/logo.png') }}" alt="" style="height: 50px;" />
                 </a>
             </div>
             <div class="login-menu">
                 <ul>
                     @if ($title == 'login')
-                        <li><a href="{{ route('register') }}">Register</a></li>
+                        <li><a href="{{ route('register') }}" class="text-warning">Register</a></li>
                     @elseif($title == 'register')
-                        <li><a href="{{ route('login') }}">Login</a></li>
+                        <li><a href="{{ route('login') }}" class="text-warning">Login</a></li>
                     @endif
                 </ul>
             </div>
