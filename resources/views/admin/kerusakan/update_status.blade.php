@@ -46,14 +46,22 @@
                 document.getElementById('qr-form').submit();
             });
 
-            Instascan.Camera.getCameras().then(function(cameras) {
-                if (cameras.length > 0) {
-                    scanner.start(cameras[0]);
-                } else {
-                    console.error('No cameras found.');
+            // Function to find the back camera
+            function findBackCamera(cameras) {
+                for (let i = 0; i < cameras.length; i++) {
+                    if (cameras[i].name.toLowerCase().includes('back')) {
+                        return cameras[i];
+                    }
                 }
+                return cameras[0]; // Return the first camera if no back camera is found
+            }
+
+            // Get cameras and start scanning
+            Instascan.Camera.getCameras().then(function(cameras) {
+                let backCamera = findBackCamera(cameras);
+                scanner.start(backCamera);
             }).catch(function(e) {
-                console.error(e);
+                console.error('Error initializing scanner:', e);
             });
 
             // Menampilkan tombol scan dan menyembunyikan form dan tombol submit
