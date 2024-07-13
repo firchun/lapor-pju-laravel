@@ -774,7 +774,7 @@ ul.dropdown-menu li {
 }
 
 .counter {
-  background: #0099FF;
+  background: #291471;
 }
 .counter .counter-item h2 {
   color: #fff;
@@ -792,7 +792,7 @@ ul.dropdown-menu li {
   height: 100px;
   border-radius: 100%;
   color: #fafafa;
-  background: #0099FF;
+  background: #291471;
   display: inline-block;
   padding-top: 28px;
 }
@@ -1514,7 +1514,7 @@ ul.dropdown-menu li {
 
 .footer {
   padding-bottom: 10px;
-  background: #000;
+  background: #291471;
 }
 .footer .copyright a {
   font-weight: 600;

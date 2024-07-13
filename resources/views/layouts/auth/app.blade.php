@@ -52,7 +52,7 @@
             <div class="login-menu">
                 <ul>
                     @if ($title == 'login')
-                        <li><a href="{{ route('register') }}" class="text-warning">Register</a></li>
+                        {{-- <li><a href="{{ route('register') }}" class="text-warning">Register</a></li> --}}
                     @elseif($title == 'register')
                         <li><a href="{{ route('login') }}" class="text-warning">Login</a></li>
                     @endif

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Fasilitas;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class HomeController extends Controller
         $data = [
             'title' => 'Dashboard',
             'users' => User::count(),
-            'customers' => Customer::count()
+            'fasilitas' => Fasilitas::count()
         ];
         return view('admin.dashboard', $data);
     }

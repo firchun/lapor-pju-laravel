@@ -10,7 +10,7 @@
             </div>
             <div class="widget-icon">
                 <div class="icon" data-color="#00eccf">
-                    <i class="icon-copy dw dw-{{ $icon ?? 'folder' }}"></i>
+                    <i class="icon-copy bi bi-{{ $icon ?? 'folder' }}"></i>
                 </div>
             </div>
         </div>

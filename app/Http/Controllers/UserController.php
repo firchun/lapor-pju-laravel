@@ -14,26 +14,25 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function admin()
     {
         $data = [
-            'title' => 'Users',
-            'users' => User::all()
+            'title' => 'Data Admin',
+            'role' => 'Admin',
         ];
-        return view('admin.users.index', $data);
+        return view('admin.users.admin', $data);
     }
     public function teknisi()
     {
         $data = [
             'title' => 'Data Teknisi',
             'role' => 'Teknisi',
-            'users' => User::all()
         ];
         return view('admin.users.teknisi', $data);
     }
-    public function getUsersDataTable()
+    public function getUsersDataTable($role)
     {
-        $users = User::select(['id', 'name', 'email', 'created_at', 'updated_at', 'role', 'avatar'])->orderByDesc('id');
+        $users = User::orderByDesc('id')->where('role', $role);
 
         return Datatables::of($users)
             ->addColumn('avatar', function ($user) {

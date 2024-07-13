@@ -31,6 +31,8 @@
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="{{ asset('frontend_theme') }}/css/style.css">
 
+    @stack('css')
+
 </head>
 
 <body>
@@ -70,7 +72,7 @@
     </script>
 
     <script src="{{ asset('frontend_theme') }}/js/script.js"></script>
-
+    @stack('js')
 </body>
 
 </html>

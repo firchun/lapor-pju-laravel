@@ -25,30 +25,35 @@
                 <div class="card-body">
                     <h2>{{ $title }}</h2>
                 </div>
-                <table id="datatable-customers" class="table table-h0ver  display mb-3">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+                <div class="table-responsive">
 
-                    <tfoot>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot>
-                </table>
+                    <table id="datatable-fasilitas" class="table table-hover  display mb-3">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Foto</th>
+                                <th>Code Fasilitas</th>
+                                <th>Alamat</th>
+                                <th>Koordinat</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Foto</th>
+                                <th>Code Fasilitas</th>
+                                <th>Alamat</th>
+                                <th>Koordinat</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    @include('admin.customers.components.modal')
+    @include('admin.fasilitas.components.modal')
 @endsection
-@include('admin.customers.script')
+@include('admin.fasilitas.script')

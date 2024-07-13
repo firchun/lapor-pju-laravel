@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('perbaikan_selesai', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_perbaikan');
+            $table->foreignId('id_kerusakan');
             $table->foreignId('id_user');
             $table->string('foto_sebelum');
             $table->string('foto_proses');
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('keterangan')->default('-');
             $table->timestamps();
 
-            $table->foreign('id_perbaikan')->references('id')->on('perbaikan');
+            $table->foreign('id_kerusakan')->references('id')->on('kerusakan');
             $table->foreign('id_user')->references('id')->on('users');
         });
     }

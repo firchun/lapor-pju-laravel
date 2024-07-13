@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('fasilitas', function (Blueprint $table) {
-            $table->string('code_fasilitas')->after('code')->unique();
+            $table->string('qrcode')->after('code');
         });
     }
 

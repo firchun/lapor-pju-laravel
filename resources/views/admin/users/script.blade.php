@@ -5,7 +5,7 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: '{{ url('users-datatable') }}',
+                ajax: '{{ url('users-datatable', $role) }}',
                 columns: [{
                         data: 'id',
                         name: 'id'

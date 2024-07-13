@@ -16,8 +16,6 @@ return new class extends Migration
         Schema::create('fasilitas', function (Blueprint $table) {
             $table->id();
             $table->uuid('code')->unique();
-            $table->string('nama');
-            $table->string('jalan');
             $table->text('alamat');
             $table->string('latitude');
             $table->string('longitude');

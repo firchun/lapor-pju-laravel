@@ -106,23 +106,55 @@
                         <span class="micon bi bi-house"></span><span class="mtext">Dashboard</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('fasilitas') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('fasilitas*') ? 'active' : '' }}">
-                        <span class="micon bi bi-lamp"></span><span class="mtext">Fasilitas PJU</span>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon bi bi-people"></span><span class="mtext">Pengguna</span>
-                    </a>
-                    <ul class="submenu">
-                        <li>
-                            <a href="{{ route('users') }}"
-                                class="{{ request()->is('users') ? 'active' : '' }}">Teknisi</a>
-                        </li>
-                    </ul>
-                </li>
+                @if (Auth::user()->role == 'Admin')
+                    <li>
+                        <a href="{{ route('fasilitas') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('fasilitas*') ? 'active' : '' }}">
+                            <span class="micon bi bi-lamp"></span><span class="mtext">Fasilitas PJU</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon bi bi-people"></span><span class="mtext">Pengguna</span>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('users.admin') }}"
+                                    class="{{ request()->is('users/admin') ? 'active' : '' }}">Admin</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('users.teknisi') }}"
+                                    class="{{ request()->is('users/teknisi') ? 'active' : '' }}">Teknisi</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon bi bi-folder"></span><span class="mtext">Laporan</span>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('laporan.perbaikan') }}"
+                                    class="{{ request()->is('laporan/perbaikan*') ? 'active' : '' }}">Laporan
+                                    perbaikan</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ route('kerusakan') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('kerusakan') ? 'active' : '' }}">
+                            <span class="micon bi bi-lamp"></span><span class="mtext">Laporan Kerusakan</span>
+                        </a>
+                        <a href="{{ route('kerusakan.update-status') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('kerusakan/update-status*') ? 'active' : '' }}">
+                            <span class="micon bi bi-pencil-square"></span><span class="mtext">Update
+                                Pekerjaan</span>
+                        </a>
+                    </li>
+                @endif
 
                 <li>
                     <a href="{{ url('/profile') }}"

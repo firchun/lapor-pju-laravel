@@ -10,14 +10,14 @@
             'title' => 'Users',
             'subtitle' => 'Total users',
             'color' => 'primary',
-            'icon' => 'user',
+            'icon' => 'person-circle',
         ])
         @include('admin.dashboard_component.card1', [
-            'count' => $customers,
-            'title' => 'Customers',
-            'subtitle' => 'Total Customers',
+            'count' => $fasilitas,
+            'title' => 'Fasilitas PJU',
+            'subtitle' => 'Total fasilitas',
             'color' => 'success',
-            'icon' => 'user',
+            'icon' => 'lamp',
         ])
     </div>
 @endsection
