@@ -103,6 +103,7 @@ Route::middleware(['auth:web', 'role:Teknisi'])->group(function () {
     Route::post('/kerusakan/perbaikan',  [KerusakanController::class, 'perbaikan'])->name('kerusakan.perbaikan');
     Route::post('/kerusakan/selesai',  [KerusakanController::class, 'selesai'])->name('kerusakan.selesai');
     Route::get('/kerusakan/update-status',  [KerusakanController::class, 'updateStatus'])->name('kerusakan.update-status');
+    Route::get('/kerusakan/detail/{id}',  [KerusakanController::class, 'show'])->name('kerusakan.detail');
     Route::get('/kerusakan/terima/{id}',  [KerusakanController::class, 'terima'])->name('kerusakan.terima');
     Route::get('/kerusakan/tolak/{id}',  [KerusakanController::class, 'tolak'])->name('kerusakan.terima');
     Route::get('/kerusakan-datatable', [KerusakanController::class, 'getKerusakanDataTable']);

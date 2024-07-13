@@ -30,6 +30,15 @@ class KerusakanController extends Controller
         ];
         return view('admin.kerusakan.update_status', $data);
     }
+    public function show($id)
+    {
+        $kerusakan = Kerusakan::find($id);
+        $data = [
+            'title' => 'Detail Laporan',
+            'kerusakan' => $kerusakan,
+        ];
+        return view('admin.kerusakan.detail', $data);
+    }
     public function store(Request $request)
     {
         // Validasi input jika diperlukan
