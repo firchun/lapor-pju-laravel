@@ -20,11 +20,11 @@
             </ul>
             @guest
                 <a href="{{ route('login') }}"
-                    class="btn btn-solid-border d-none d-lg-block {{ $title != 'Home' ? 'text-white' : '' }}">Login<i
+                    class="btn btn-solid-border {{ $title != 'Home' ? 'text-white' : '' }}">Login<i
                         class="fa fa-angle-right ml-2"></i></a>
             @else
                 <a href="{{ route('home') }}"
-                    class="btn btn-solid-border d-none d-lg-block {{ $title != 'Home' ? 'text-white' : '' }}">Dashboard<i
+                    class="btn btn-solid-border {{ $title != 'Home' ? 'text-white' : '' }}">Dashboard<i
                         class="fa fa-angle-right ml-2"></i></a>
             @endguest
         </div>
