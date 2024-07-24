@@ -19,7 +19,9 @@
                         <tr>
                             <td><b>Nama Pelapor</b></td>
                             <td>:</td>
-                            <td>{{ $kerusakan->nama_pelapor }}</td>
+                            <td>{{ $kerusakan->nama_pelapor }} <span
+                                    class="badge badge-success">{{ $kerusakan->id_user ? 'Teknisi' : 'Masyarakat' }}</span>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>No HP/WA Pelapor</b></td>
@@ -34,20 +36,38 @@
                         <tr>
                             <td><b>Foto Pelapor</b></td>
                             <td>:</td>
-                            <td><img src="{{ Storage::url($kerusakan->foto_pelapor) }}"
-                                    style="width: 100%;height:auto; object-fit:cover;"></td>
+                            <td>
+                                @if ($kerusakan->foto_pelapor)
+                                    <img src="{{ Storage::url($kerusakan->foto_pelapor) }}"
+                                        style="width: 100%;height:auto; object-fit:cover;">
+                                @else
+                                    <span class="text-mutted">Tidak Terlampir</span>
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Foto Kerusakan 1</b></td>
                             <td>:</td>
-                            <td><img src="{{ Storage::url($kerusakan->foto_kerusakan_1) }}"
-                                    style="width: 100%;height:auto; object-fit:cover;"></td>
+                            <td>
+                                @if ($kerusakan->foto_kerusakan_1)
+                                    <img src="{{ Storage::url($kerusakan->foto_kerusakan_1) }}"
+                                        style="width: 100%;height:auto; object-fit:cover;">
+                                @else
+                                    <span class="text-mutted">Tidak Terlampir</span>
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Foto Kerusakan 2</b></td>
                             <td>:</td>
-                            <td><img src="{{ Storage::url($kerusakan->foto_kerusakan_2) }}"
-                                    style="width: 100%;height:auto; object-fit:cover;"></td>
+                            <td>
+                                @if ($kerusakan->foto_kerusakan_2)
+                                    <img src="{{ Storage::url($kerusakan->foto_kerusakan_2) }}"
+                                        style="width: 100%;height:auto; object-fit:cover;">
+                                @else
+                                    <span class="text-mutted">Tidak Terlampir</span>
+                                @endif
+                            </td>
                         </tr>
                     </table>
                 </div>

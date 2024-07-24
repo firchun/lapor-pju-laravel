@@ -100,8 +100,8 @@
                             <th>ID</th>
                             <th>Code</th>
                             <th>Nama Pelapor</th>
-                            <th>Keterangan</th>
-                            <th>Statu</th>
+                            <th>Jenis Laporan</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -111,7 +111,7 @@
                             <th>ID</th>
                             <th>Code</th>
                             <th>Nama Pelapor</th>
-                            <th>Keterangan</th>
+                            <th>Jenis Laporan</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>

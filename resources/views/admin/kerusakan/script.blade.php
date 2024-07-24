@@ -13,7 +13,12 @@
 
                     {
                         data: 'fasilitas.code',
-                        name: 'fasilitas.code'
+                        name: 'fasilitas.code',
+                        render: function(data, type, full, meta) {
+                            var formattedCode = data + '<br>';
+                            var formattedDate = moment(full.created_at).format('DD-MM-YYYY');
+                            return formattedCode + '<small>' + formattedDate + '<small>';
+                        }
                     },
                     {
                         data: 'pelapor',
@@ -21,8 +26,8 @@
                     },
 
                     {
-                        data: 'keterangan',
-                        name: 'keterangan'
+                        data: 'jenis_laporan',
+                        name: 'jenis_laporan'
                     },
                     {
                         data: 'status',
@@ -41,4 +46,6 @@
 
         });
     </script>
+    <!-- Moment.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 @endpush

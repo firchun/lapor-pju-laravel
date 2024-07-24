@@ -26,7 +26,13 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
+                @elseif (Session::has('danger'))
+                    <div class="alert alert-danger alert-dismissible mb-4" role="alert">
+                        {{ Session::get('danger') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
             @endif
 
             <h3 class="my-4 text-center">Data Laporan Kerusakan PJU oleh Masyarakat</h3>

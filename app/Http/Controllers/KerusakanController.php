@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AlatPerbaikan;
 use App\Models\Fasilitas;
 use App\Models\Kerusakan;
 use App\Models\Perbaikan;
+use App\Models\PerbaikanMitra;
 use App\Models\PerbaikanSelesai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +24,14 @@ class KerusakanController extends Controller
             'finished' => Kerusakan::where('status', 'Finished')->count(),
         ];
         return view('admin.kerusakan.index', $data);
+    }
+    public function input()
+    {
+        $data = [
+            'title' => 'Tambah pekerjaan Perbaikan PJU',
+
+        ];
+        return view('admin.kerusakan.input', $data);
     }
     public function updateStatus()
     {
@@ -43,9 +53,9 @@ class KerusakanController extends Controller
     {
         // Validasi input jika diperlukan
         $request->validate([
-            'foto_pelapor' => 'required|image', // contoh validasi untuk foto
-            'foto_kerusakan_1' => 'required|image',
-            'foto_kerusakan_2' => 'required|image',
+            'foto_pelapor' => 'image', // contoh validasi untuk foto
+            'foto_kerusakan_1' => 'image',
+            'foto_kerusakan_2' => 'image',
             'nama_pelapor' => 'required|string|max:255',
             'no_hp_pelapor' => 'required|string|max:20',
             'keterangan' => 'required|string',
@@ -58,23 +68,51 @@ class KerusakanController extends Controller
         $kerusakan->no_hp_pelapor = $request->no_hp_pelapor;
         $kerusakan->keterangan = $request->keterangan;
 
+        if ($request->has('id_user')) {
+
+            $kerusakan->id_user = $request->id_user;
+            $kerusakan->is_verified = 1;
+            $kerusakan->Status = 'Verified';
+        }
+
         // Simpan foto-foto ke dalam storage dan dapatkan path-nya
-        $foto_pelapor_path = $request->file('foto_pelapor')->storeAs('public/kerusakan', 'foto_pelapor_' . now()->timestamp . '.' . $request->file('foto_pelapor')->extension());
-        $foto_kerusakan_1_path = $request->file('foto_kerusakan_1')->storeAs('public/kerusakan', 'foto_kerusakan_1_' . now()->timestamp . '.' . $request->file('foto_kerusakan_1')->extension());
-        $foto_kerusakan_2_path = $request->file('foto_kerusakan_2')->storeAs('public/kerusakan', 'foto_kerusakan_2_' . now()->timestamp . '.' . $request->file('foto_kerusakan_2')->extension());
+        if ($request->has('foto_pelapor')) {
+            $foto_pelapor_path = $request->file('foto_pelapor')->storeAs('public/kerusakan', 'foto_pelapor_' . now()->timestamp . '.' . $request->file('foto_pelapor')->extension());
+        }
+        if ($request->has('foto_kerusakan_1')) {
+            $foto_kerusakan_1_path = $request->file('foto_kerusakan_1')->storeAs('public/kerusakan', 'foto_kerusakan_1_' . now()->timestamp . '.' . $request->file('foto_kerusakan_1')->extension());
+        }
+        if ($request->has('foto_kerusakan_2')) {
+            $foto_kerusakan_2_path = $request->file('foto_kerusakan_2')->storeAs('public/kerusakan', 'foto_kerusakan_2_' . now()->timestamp . '.' . $request->file('foto_kerusakan_2')->extension());
+        }
 
         // Ubah path menjadi URL publik jika perlu, menggunakan asset() atau Storage::url()
 
-        $kerusakan->foto_pelapor = $foto_pelapor_path;
-        $kerusakan->foto_kerusakan_1 = $foto_kerusakan_1_path;
-        $kerusakan->foto_kerusakan_2 = $foto_kerusakan_2_path;
+        $kerusakan->foto_pelapor = $foto_pelapor_path ?? null;
+        $kerusakan->foto_kerusakan_1 = $foto_kerusakan_1_path ?? null;
+        $kerusakan->foto_kerusakan_2 = $foto_kerusakan_2_path ?? null;
 
         // Simpan data ke dalam database
-        $kerusakan->save();
 
+        $cek_laporan = Kerusakan::where('id_fasilitas', $request->id_fasilitas)->whereBetween('status', ['Pending', 'Verified', 'Repair'])->count();
+
+        if ($cek_laporan > 0) {
+            session()->flash('danger', 'Terimakasih telah melapor, Fasilitas ini telah telah dilaporkan oleh orang lain');
+            if (auth()->check()) {
+                return redirect()->back();
+            } else {
+                return redirect()->to('/laporan_user');
+            }
+        } else {
+            $kerusakan->save();
+            session()->flash('success', 'Terimakasih telah melapor, Laporan telah berhasil dikirim');
+            if (auth()->check()) {
+                return redirect()->back();
+            } else {
+                return redirect()->to('/laporan_user');
+            }
+        }
         // Redirect atau kembali ke halaman yang sesuai dengan logika aplikasi Anda
-        session()->flash('success', 'Terimakasih telah melapor, Laporan telah berhasil dikirim');
-        return redirect()->to('/laporan_user');
     }
     public function update(Request $request)
     {
@@ -92,10 +130,10 @@ class KerusakanController extends Controller
             session()->flash('danger', 'Tidak ada laporan pada fasilitas ini');
             return redirect()->to('/kerusakan/update-status');
         }
-        if ($cek_finished != 0) {
-            session()->flash('danger', 'laporan ini telah selesai');
-            return redirect()->to('/kerusakan/update-status');
-        }
+        // if ($cek_finished != 0) {
+        //     session()->flash('danger', 'laporan ini telah selesai');
+        //     return redirect()->to('/kerusakan/update-status');
+        // }
         if ($cek_verified == 0) {
             session()->flash('danger', 'laporan belum di verifikasi');
             return redirect()->to('/kerusakan/update-status');
@@ -128,6 +166,26 @@ class KerusakanController extends Controller
         $kerusakan = Kerusakan::find($request->input('id_kerusakan'));
         $kerusakan->status = 'Repair';
         if ($kerusakan->save() && $perbaikan->save()) {
+            if ($request->has('id_mitra')) {
+                $mitra = new PerbaikanMitra();
+                $mitra->id_mitra = $request->input('id_mitra');
+                $mitra->id_kerusakan = $request->input('id_kerusakan');
+                $mitra->biaya = $request->input('biaya');
+                $mitra->save();
+            }
+            if ($request->has('nama_alat')) {
+                $alats = $request->input('nama_alat');
+
+                // Simpan data ke database
+                foreach ($alats as $alat) {
+                    $alatPerbaikan = new AlatPerbaikan();
+                    $alatPerbaikan->id_kerusakan = $request->input('id_kerusakan');
+                    $alatPerbaikan->id_perbaikan = $perbaikan->id;
+                    $alatPerbaikan->nama_alat = $alat;
+                    $alatPerbaikan->jumlah = $request->input('jumlah')[$alat];
+                    $alatPerbaikan->save();
+                }
+            }
             session()->flash('success', 'berhasil update perbaikan');
             return redirect()->to('/kerusakan/update-status');
         } else {
@@ -174,13 +232,19 @@ class KerusakanController extends Controller
             ->addColumn('action', function ($Kerusakan) {
                 return view('admin.kerusakan.components.actions', compact('Kerusakan'));
             })
+            ->addColumn('jenis_laporan', function ($Kerusakan) {
+                $jenis_pelapor = $Kerusakan->id_user ? 'badge badge-warning' : 'badge badge-success';
+                $jenis = $Kerusakan->id_user ? 'Teknisi' : 'Masyarakat';
+                return '<span class="' . $jenis_pelapor . '">' . $jenis . '</span>';
+            })
             ->addColumn('pelapor', function ($Kerusakan) {
+
                 return '<strong>' . $Kerusakan->nama_pelapor . '</strong><br><a target="__blank" href="https://wa.me/' . $Kerusakan->no_hp_pelapor . '">' . $Kerusakan->no_hp_pelapor . '</a>';
             })
             ->addColumn('lihat_laporan', function ($Kerusakan) {
                 return '<a href="' . url('/laporan/detail-laporan', $Kerusakan->id) . '" target="__blank" class="btn btn-primary">Lihat Laporan</a>';
             })
-            ->rawColumns(['action', 'pelapor', 'lihat_laporan'])
+            ->rawColumns(['action', 'pelapor', 'lihat_laporan', 'jenis_laporan'])
             ->make(true);
     }
     public function terima($id)

@@ -57,6 +57,13 @@
             </tr>
             <tr>
                 <td>
+                    <b>Oleh</b>
+                </td>
+
+                <td>{{ $data->id_user ? 'Teknisi' : 'Masyarakat' }}</td>
+            </tr>
+            <tr>
+                <td>
                     <b>Tanggal Laporan</b>
                 </td>
 
@@ -82,8 +89,12 @@
                 </td>
 
                 <td>
-                    <img src="{{ storage_path('app/' . $data->foto_pelapor) }}"
-                        style="height: 150px; width:150px;object-fit:cover;">
+                    @if ($data->foto_pelapor)
+                        <img src="{{ storage_path('app/' . $data->foto_pelapor) }}"
+                            style="height: 150px; width:150px;object-fit:cover;">
+                    @else
+                        <span class="text-mutted">Tidak Terlampir</span>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -93,18 +104,22 @@
 
                 <td class="mt-3">
                     <div class="d-flex mt-3">
-
-                        <img src="{{ storage_path('app/' . $data->foto_kerusakan_1) }}"
-                            style="height: 150px; width:150px;object-fit:cover;">
-                        <img src="{{ storage_path('app/' . $data->foto_kerusakan_2) }}"
-                            style="height: 150px; width:150px;object-fit:cover;">
+                        @if ($data->foto_kerusakan_1)
+                            <img src="{{ storage_path('app/' . $data->foto_kerusakan_1) }}"
+                                style="height: 150px; width:150px;object-fit:cover;">
+                        @elseif($data->foto_kerusakan_2)
+                            <img src="{{ storage_path('app/' . $data->foto_kerusakan_2) }}"
+                                style="height: 150px; width:150px;object-fit:cover;">
+                        @else
+                            <span class="text-mutted">Tidak Terlampir</span>
+                        @endif
                     </div>
                 </td>
             </tr>
         </table>
         <div class="page_break">
         </div>
-        @if ($perbaikan->count() != 0)
+        @if ($perbaikan)
             {{-- laporan perbaikan --}}
             <table class="" style="font-size: 18px; padding:5px; width:100%; border:0px;">
                 <tr>
@@ -125,7 +140,7 @@
             <table class="table_custom" width="100%">
                 <tr>
                     <td><b>Code PJU</b></td>
-                    <td>{{ $perbaikan->fasilitas->code }}</td>
+                    <td>{{ $perbaikan->fasilitas->code }}</td>S
                 </tr>
                 <tr>
                     <td><b>Alamat PJU</b></td>
@@ -155,7 +170,7 @@
             <div class="page_break">
             </div>
         @endif
-        @if ($selesai->count() != 0)
+        @if ($selesai)
             {{-- laporan selesai --}}
             <table class="" style="font-size: 18px; padding:5px; width:100%; border:0px;">
                 <tr>
@@ -190,6 +205,36 @@
                     <td><b>Teknisi</b></td>
                     <td>{{ $selesai->user->name }}</td>
                 </tr>
+                @php
+                    $perbaikan_mitra = App\Models\PerbaikanMitra::where('id_kerusakan', $selesai->id_kerusakan);
+                    $mitra = $perbaikan_mitra->latest()->first();
+                @endphp
+                @if ($perbaikan_mitra->count() != 0)
+                    <tr>
+                        <td><b>Mitra</b></td>
+                        <td>{{ $mitra->mitra->nama_mitra }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Biaya</b></td>
+                        <td>{{ $mitra->mitra->biaya }}</td>
+                    </tr>
+                @endif
+                @php
+                    $alat_perbaikan = App\Models\AlatPerbaikan::where('id_kerusakan', $selesai->id_kerusakan);
+                    $alat = $alat_perbaikan->get();
+                @endphp
+                @if ($perbaikan_mitra->count() != 0)
+                    <tr>
+                        <td><b>Alat diperbaiki</b></td>
+                        <td>
+                            <ol>
+                                @foreach ($alat as $alatItem)
+                                    <li>{{ $alatItem->nama_alat }} - {{ $alatItem->jumlah }}</li>
+                                @endforeach
+                            </ol>
+                        </td>
+                    </tr>
+                @endif
                 <tr>
                     <td><b>Tanggal Pengerjaan</b></td>
                     <td>{{ $selesai->created_at->format('d/m/Y') }}</td>

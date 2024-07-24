@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\KerusakanController;
 use App\Http\Controllers\laporanController;
+use App\Http\Controllers\MitraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Fasilitas;
@@ -72,9 +73,15 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/customers-datatable', [CustomerController::class, 'getCustomersDataTable']);
 });
 Route::middleware(['auth:web', 'role:Admin'])->group(function () {
+    //mitra managemen
+    Route::get('/mitra', [MitraController::class, 'index'])->name('mitra');
+    Route::post('/mitra/store',  [MitraController::class, 'store'])->name('mitra.store');
+    Route::post('/mitra/update',  [MitraController::class, 'update'])->name('mitra.update');
+    Route::get('/mitra/edit/{id}',  [MitraController::class, 'edit'])->name('mitra.edit');
+    Route::delete('/mitra/delete/{id}',  [MitraController::class, 'destroy'])->name('mitra.delete');
+    Route::get('/mitra-datatable', [MitraController::class, 'getMitraDataTable']);
     //fasilitas managemen
     Route::get('/fasilitas', [FasilitasController::class, 'index'])->name('fasilitas');
-
     Route::post('/fasilitas/store',  [FasilitasController::class, 'store'])->name('fasilitas.store');
     Route::post('/fasilitas/update',  [FasilitasController::class, 'update'])->name('fasilitas.update');
     Route::get('/fasilitas/edit/{id}',  [FasilitasController::class, 'edit'])->name('fasilitas.edit');
@@ -82,7 +89,9 @@ Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     Route::delete('/fasilitas/delete/{id}',  [FasilitasController::class, 'destroy'])->name('fasilitas.delete');
     Route::get('/fasilitas-datatable', [FasilitasController::class, 'getFasilitasDataTable']);
     //laporan managemen
+    Route::get('/laporan/teknisi', [laporanController::class, 'teknisi'])->name('laporan.teknisi');
     Route::get('/laporan/perbaikan', [laporanController::class, 'perbaikan'])->name('laporan.perbaikan');
+    Route::get('/laporan-teknisi-datatable', [laporanController::class, 'getTeknisiDataTable']);
     Route::get('/laporan-kerusakan-datatable', [KerusakanController::class, 'getKerusakanDataTable']);
     Route::get('/laporan/detail-laporan/{id}', [laporanController::class, 'detail_laporan'])->name('laporan.detail-laporan');
     //user managemen
@@ -98,6 +107,7 @@ Route::middleware(['auth:web', 'role:Teknisi'])->group(function () {
     //kerusakan managemen
 
     Route::get('/kerusakan', [KerusakanController::class, 'index'])->name('kerusakan');
+    Route::get('/kerusakan/input', [KerusakanController::class, 'input'])->name('kerusakan.input');
     // Route::post('/kerusakan/store',  [KerusakanController::class, 'store'])->name('kerusakan.store');
     Route::get('/kerusakan/update',  [KerusakanController::class, 'update'])->name('kerusakan.update');
     Route::post('/kerusakan/perbaikan',  [KerusakanController::class, 'perbaikan'])->name('kerusakan.perbaikan');
@@ -107,4 +117,9 @@ Route::middleware(['auth:web', 'role:Teknisi'])->group(function () {
     Route::get('/kerusakan/terima/{id}',  [KerusakanController::class, 'terima'])->name('kerusakan.terima');
     Route::get('/kerusakan/tolak/{id}',  [KerusakanController::class, 'tolak'])->name('kerusakan.terima');
     Route::get('/kerusakan-datatable', [KerusakanController::class, 'getKerusakanDataTable']);
+    //laporan managemen
+    Route::get('/laporan/perbaikan-teknisi', [laporanController::class, 'perbaikan_teknisi'])->name('laporan.perbaikan-teknisi');
+    Route::get('/laporan/datatable-perbaikan-teknisi', [laporanController::class, 'getPerbaikanTeknisiDataTable']);
+    Route::get('/laporan/akhir-teknisi', [laporanController::class, 'akhir_teknisi'])->name('laporan.akhir-teknisi');
+    Route::get('/laporan/datatable-akhir-teknisi', [laporanController::class, 'getAkhirTeknisiDataTable']);
 });

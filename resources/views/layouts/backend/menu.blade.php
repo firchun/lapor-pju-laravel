@@ -108,9 +108,15 @@
                 </li>
                 @if (Auth::user()->role == 'Admin')
                     <li>
+                        <a href="{{ route('mitra') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('mitra*') ? 'active' : '' }}">
+                            <span class="micon bi bi-building"></span><span class="mtext">Mitra</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('fasilitas') }}"
                             class="dropdown-toggle no-arrow {{ request()->is('fasilitas*') ? 'active' : '' }}">
-                            <span class="micon bi bi-lamp"></span><span class="mtext">Fasilitas PJU</span>
+                            <span class="micon bi bi-lightbulb"></span><span class="mtext">Fasilitas PJU</span>
                         </a>
                     </li>
                     <li class="dropdown">
@@ -138,21 +144,50 @@
                                     class="{{ request()->is('laporan/perbaikan*') ? 'active' : '' }}">Laporan
                                     perbaikan</a>
                             </li>
+                            <li>
+                                <a href="{{ route('laporan.teknisi') }}"
+                                    class="{{ request()->is('laporan/teknisi*') ? 'active' : '' }}">Laporan
+                                    teknisi</a>
+                            </li>
 
 
                         </ul>
                     </li>
                 @else
                     <li>
+                        <a href="{{ route('kerusakan.input') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('kerusakan/input') ? 'active' : '' }}">
+                            <span class="micon bi bi-plus"></span><span class="mtext">Input Pekerjaan</span>
+                        </a>
                         <a href="{{ route('kerusakan') }}"
                             class="dropdown-toggle no-arrow {{ request()->is('kerusakan') ? 'active' : '' }}">
-                            <span class="micon bi bi-lamp"></span><span class="mtext">Laporan Kerusakan</span>
+                            <span class="micon bi bi-lightbulb-off"></span><span class="mtext">Laporan
+                                Kerusakan</span>
                         </a>
                         <a href="{{ route('kerusakan.update-status') }}"
                             class="dropdown-toggle no-arrow {{ request()->is('kerusakan/update-status*') ? 'active' : '' }}">
                             <span class="micon bi bi-pencil-square"></span><span class="mtext">Update
                                 Pekerjaan</span>
                         </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon bi bi-folder"></span><span class="mtext">Laporan</span>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('laporan.perbaikan-teknisi') }}"
+                                    class="{{ request()->is('laporan/perbaikan-teknisi') ? 'active' : '' }}">Laporan
+                                    Perbaikan</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('laporan.akhir-teknisi') }}"
+                                    class="{{ request()->is('laporan/akhir-teknisi') ? 'active' : '' }}">Laporan
+                                    Akhir</a>
+                            </li>
+
+
+                        </ul>
                     </li>
                 @endif
 
