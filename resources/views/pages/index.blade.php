@@ -110,8 +110,8 @@
 
         <div class="container-fluid">
             <div class="row">
-                @foreach (App\Models\Kerusakan::with(['fasilitas'])->latest()->limit(5)->get() as $item)
-                    <div class="col-lg-12 testimonial-wrap">
+                <div class="col-lg-12 testimonial-wrap">
+                    @foreach (App\Models\Kerusakan::with(['fasilitas'])->latest()->whereNull('id_user')->limit(5)->get() as $item)
                         <div class="testimonial-block">
                             <p>
                                 <strong>{{ $item->fasilitas->code }}</strong><br>
@@ -135,8 +135,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
     </section>
