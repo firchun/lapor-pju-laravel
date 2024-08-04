@@ -42,7 +42,7 @@
 
 </head>
 
-<body>
+<body style="background-color: #4169E1;">
     {{-- <div class="pre-loader">
         <div class="pre-loader-box">
             <div class="loader-logo">

@@ -28,6 +28,20 @@ class laporanController extends Controller
         ];
         return view('admin.laporan.perbaikan', $data);
     }
+    public function pemeliharaan()
+    {
+        $data = [
+            'title' => 'Laporan pemeliharaan Box Control ',
+        ];
+        return view('admin.laporan.pemeliharaan', $data);
+    }
+    public function pemeliharaan_teknisi()
+    {
+        $data = [
+            'title' => 'Laporan pemeliharaan Box Control ',
+        ];
+        return view('admin.laporan.pemeliharaan_teknisi', $data);
+    }
     public function perbaikan_teknisi()
     {
         $data = [

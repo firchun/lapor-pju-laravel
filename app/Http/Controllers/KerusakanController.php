@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AlatPerbaikan;
+use App\Models\BoxControl;
 use App\Models\Fasilitas;
 use App\Models\Kerusakan;
 use App\Models\Perbaikan;
@@ -117,7 +118,21 @@ class KerusakanController extends Controller
     public function update(Request $request)
     {
         $code = $request->input('code');
-        $fasilitas = Fasilitas::where('code', $code)->first();
+        $angkadepan = substr($code, 0, 3);
+        if ($angkadepan == 'PJU') {
+            $fasilitas = Fasilitas::where('code', $code)->first();
+        } else {
+            $box = BoxControl::where('code', $code)->first();
+        }
+        if ($angkadepan == 'BOX') {
+            if (!$box) {
+                session()->flash('danger', 'Box not found');
+                return redirect()->to('/kerusakan/update-status');
+            } else {
+                return view('admin.box_control.update_pemeliharaan', ['box' => $box]);
+            }
+        }
+
         if (!$fasilitas) {
             session()->flash('danger', 'Fasilitas not found');
             return redirect()->to('/kerusakan/update-status');

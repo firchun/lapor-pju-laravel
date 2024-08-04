@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BoxControlController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\KerusakanController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\laporanController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\BoxControl;
 use App\Models\Fasilitas;
 use App\Models\Kerusakan;
 use Illuminate\Support\Facades\Auth;
@@ -71,8 +73,17 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/customers/edit/{id}',  [CustomerController::class, 'edit'])->name('customers.edit');
     Route::delete('/customers/delete/{id}',  [CustomerController::class, 'destroy'])->name('customers.delete');
     Route::get('/customers-datatable', [CustomerController::class, 'getCustomersDataTable']);
+    Route::get('/pemeliharaan-datatable', [BoxControlController::class, 'getPemeliharaanDataTable']);
 });
 Route::middleware(['auth:web', 'role:Admin'])->group(function () {
+    //box control managemen
+    Route::get('/box-control', [BoxControlController::class, 'index'])->name('box-control');
+    Route::post('/box-control/store',  [BoxControlController::class, 'store'])->name('box-control.store');
+    Route::post('/box-control/update',  [BoxControlController::class, 'update'])->name('box-control.update');
+    Route::get('/box-control/edit/{id}',  [BoxControlController::class, 'edit'])->name('box-control.edit');
+    Route::get('/box-control/print/{id}',  [BoxControlController::class, 'print'])->name('box-control.print');
+    Route::delete('/box-control/delete/{id}',  [BoxControlController::class, 'destroy'])->name('box-control.delete');
+    Route::get('/box-control-datatable', [BoxControlController::class, 'getBoxControlDataTable']);
     //mitra managemen
     Route::get('/mitra', [MitraController::class, 'index'])->name('mitra');
     Route::post('/mitra/store',  [MitraController::class, 'store'])->name('mitra.store');
@@ -89,6 +100,7 @@ Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     Route::delete('/fasilitas/delete/{id}',  [FasilitasController::class, 'destroy'])->name('fasilitas.delete');
     Route::get('/fasilitas-datatable', [FasilitasController::class, 'getFasilitasDataTable']);
     //laporan managemen
+    Route::get('/laporan/pemeliharaan', [laporanController::class, 'pemeliharaan'])->name('laporan.pemeliharaan');
     Route::get('/laporan/teknisi', [laporanController::class, 'teknisi'])->name('laporan.teknisi');
     Route::get('/laporan/perbaikan', [laporanController::class, 'perbaikan'])->name('laporan.perbaikan');
     Route::get('/laporan-teknisi-datatable', [laporanController::class, 'getTeknisiDataTable']);
@@ -104,8 +116,10 @@ Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     Route::get('/users-datatable/{role}', [UserController::class, 'getUsersDataTable']);
 });
 Route::middleware(['auth:web', 'role:Teknisi'])->group(function () {
-    //kerusakan managemen
+    //pemeliharaan managemen
 
+    Route::post('/pemeloharaan/store', [BoxControlController::class, 'store_pemeliharaan'])->name('pemeliharaan.store');
+    //kerusakan managemen
     Route::get('/kerusakan', [KerusakanController::class, 'index'])->name('kerusakan');
     Route::get('/kerusakan/input', [KerusakanController::class, 'input'])->name('kerusakan.input');
     // Route::post('/kerusakan/store',  [KerusakanController::class, 'store'])->name('kerusakan.store');
@@ -118,6 +132,7 @@ Route::middleware(['auth:web', 'role:Teknisi'])->group(function () {
     Route::get('/kerusakan/tolak/{id}',  [KerusakanController::class, 'tolak'])->name('kerusakan.terima');
     Route::get('/kerusakan-datatable', [KerusakanController::class, 'getKerusakanDataTable']);
     //laporan managemen
+    Route::get('/laporan/pemeliharaan-teknisi', [laporanController::class, 'pemeliharaan_teknisi'])->name('laporan.pemeliharaan-teknisi');
     Route::get('/laporan/perbaikan-teknisi', [laporanController::class, 'perbaikan_teknisi'])->name('laporan.perbaikan-teknisi');
     Route::get('/laporan/datatable-perbaikan-teknisi', [laporanController::class, 'getPerbaikanTeknisiDataTable']);
     Route::get('/laporan/akhir-teknisi', [laporanController::class, 'akhir_teknisi'])->name('laporan.akhir-teknisi');

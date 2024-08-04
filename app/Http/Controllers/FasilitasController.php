@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AlatPerbaikan;
 use App\Models\Fasilitas;
+use App\Models\Kerusakan;
+use App\Models\Perbaikan;
+use App\Models\PerbaikanMitra;
+use App\Models\PerbaikanSelesai;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
@@ -48,7 +53,11 @@ class FasilitasController extends Controller
     {
 
         $request->validate([
+            'id_pelanggan_pln' => 'required|string|max:255',
+            'tarip' => 'required|string|max:255',
+            'daya' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
             'latitude' => 'required|string|max:255',
             'longitude' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif'
@@ -66,6 +75,10 @@ class FasilitasController extends Controller
         $fasilitasData = [
             'code' =>  $code,
             // 'qrcode' => $qrcodeUrl,
+            'id_pelanggan_pln' => $request->input('id_pelanggan_pln'),
+            'tarip' => $request->input('tarip'),
+            'daya' => $request->input('daya'),
+            'nama' => $request->input('nama'),
             'alamat' => $request->input('alamat'),
             'latitude' => $request->input('latitude'),
             'longitude' => $request->input('longitude'),
@@ -96,13 +109,21 @@ class FasilitasController extends Controller
     public function update(Request $request)
     {
         $request->validate([
+            'id_pelanggan_pln' => 'required|string|max:255',
+            'tarip' => 'required|string|max:255',
+            'daya' => 'required|string|max:255',
             'id_fasilitas' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'alamat' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ]);
         $Fasilitas = Fasilitas::find($request->input('id_fasilitas'));
         $fasilitasData = [
             // 'qrcode' => $qrcodeUrl,
+            'id_pelanggan_pln' => $request->input('id_pelanggan_pln'),
+            'tarip' => $request->input('tarip'),
+            'daya' => $request->input('daya'),
+            'nama' => $request->input('nama'),
             'alamat' => $request->input('alamat'),
             'latitude' => $request->input('latitude') ?? $Fasilitas->latitude,
             'longitude' => $request->input('longitude') ?? $Fasilitas->longitude,
@@ -124,16 +145,40 @@ class FasilitasController extends Controller
     }
     public function destroy($id)
     {
-        $Fasilitas = Fasilitas::find($id);
+        // Temukan fasilitas berdasarkan ID
+        $fasilitas = Fasilitas::find($id);
 
-        if (!$Fasilitas) {
+        // Jika fasilitas tidak ditemukan, kembalikan response 404
+        if (!$fasilitas) {
             return response()->json(['message' => 'Fasilitas not found'], 404);
         }
 
-        $Fasilitas->delete();
+        // Hapus semua perbaikan yang terkait dengan fasilitas
+        Perbaikan::where('id_fasilitas', $fasilitas->id)->delete();
 
+        // Hapus semua kerusakan yang terkait dengan fasilitas
+        $kerusakan = Kerusakan::where('id_fasilitas', $fasilitas->id)->get();
+        foreach ($kerusakan as $k) {
+            // Hapus semua perbaikan selesai terkait dengan kerusakan
+            PerbaikanSelesai::where('id_kerusakan', $k->id)->delete();
+
+            // Hapus semua perbaikan mitra terkait dengan kerusakan
+            PerbaikanMitra::where('id_kerusakan', $k->id)->delete();
+
+            // Hapus semua alat perbaikan terkait dengan kerusakan
+            AlatPerbaikan::where('id_kerusakan', $k->id)->delete();
+        }
+
+        // Hapus semua kerusakan yang terkait dengan fasilitas
+        Kerusakan::where('id_fasilitas', $fasilitas->id)->delete();
+
+        // Hapus fasilitas itu sendiri
+        $fasilitas->delete();
+
+        // Kembalikan response sukses
         return response()->json(['message' => 'Fasilitas deleted successfully']);
     }
+
     public function edit($id)
     {
         $Fasilitas = Fasilitas::find($id);

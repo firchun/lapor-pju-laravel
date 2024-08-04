@@ -40,7 +40,7 @@
 
 </head>
 
-<body class="login-page">
+<body class="login-page" style="background-color: #4169E1;">
     <!-- Content -->
     <div class="login-header box-shadow">
         <div class="container-fluid d-flex justify-content-between align-items-center">

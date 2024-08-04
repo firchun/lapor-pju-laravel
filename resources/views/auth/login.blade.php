@@ -5,13 +5,13 @@
         $title = 'login';
     @endphp
     <div class="row align-items-center">
-        <div class="col-md-6 col-lg-7">
-            <img src="{{ asset('backend_theme') }}/vendors/images/login-page-img.png" alt="" />
+        <div class="col-lg-7 p-3">
+            <img src="{{ asset('/img/login-img.png') }}" alt="" class="d-none d-lg-block" />
         </div>
-        <div class="col-md-6 col-lg-5">
-            <div class="login-box bg-white box-shadow border-radius-10">
+        <div class="col-lg-5">
+            <div class="login-box bg-white shadow-lg border-radius-10">
                 <div class="login-title">
-                    <h2 class="text-center text-warning">Login To {{ env('APP_NAME') }}</h2>
+                    <h2 class="text-center  " style="color: #4169E1;">Login To {{ env('APP_NAME') }}</h2>
                 </div>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
@@ -78,7 +78,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="input-group mb-0">
-                                <button type="submit" class="btn btn-warning btn-lg btn-block">Sign
+                                <button type="submit" class="btn btn-lg btn-block text-white"
+                                    style="background-color: #4169E1;">Sign
                                     In</button>
                             </div>
                             {{-- <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">

@@ -18,7 +18,7 @@
                 </span>
             </button>
         </div>
-    </div>  
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card-box mb-30">
@@ -32,6 +32,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Foto</th>
+                                <th>Nama Fasilitas</th>
                                 <th>Code Fasilitas</th>
                                 <th>Alamat</th>
                                 <th>Koordinat</th>
@@ -43,6 +44,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Foto</th>
+                                <th>Nama Fasilitas</th>
                                 <th>Code Fasilitas</th>
                                 <th>Alamat</th>
                                 <th>Koordinat</th>

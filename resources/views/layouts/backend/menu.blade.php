@@ -119,6 +119,12 @@
                             <span class="micon bi bi-lightbulb"></span><span class="mtext">Fasilitas PJU</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('box-control') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('box-control*') ? 'active' : '' }}">
+                            <span class="micon bi bi-lightbulb"></span><span class="mtext">Box Control</span>
+                        </a>
+                    </li>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon bi bi-people"></span><span class="mtext">Pengguna</span>
@@ -148,6 +154,11 @@
                                 <a href="{{ route('laporan.teknisi') }}"
                                     class="{{ request()->is('laporan/teknisi*') ? 'active' : '' }}">Laporan
                                     teknisi</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('laporan.pemeliharaan') }}"
+                                    class="{{ request()->is('laporan/pemeliharaan*') ? 'active' : '' }}">Laporan
+                                    Pemeliharaan Box Control</a>
                             </li>
 
 
@@ -184,6 +195,11 @@
                                 <a href="{{ route('laporan.akhir-teknisi') }}"
                                     class="{{ request()->is('laporan/akhir-teknisi') ? 'active' : '' }}">Laporan
                                     Akhir</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('laporan.pemeliharaan-teknisi') }}"
+                                    class="{{ request()->is('laporan/pemeliharaan-teknisi') ? 'active' : '' }}">Laporan
+                                    Pemeliharaan Box Control</a>
                             </li>
 
 

@@ -167,6 +167,10 @@
                     },
 
                     {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
                         data: 'code',
                         name: 'code'
                     },
@@ -204,6 +208,10 @@
                     url: '/fasilitas/edit/' + id,
                     success: function(response) {
                         $('#idFasilitas').val(response.id);
+                        $('#formEditFasilitasIdPelangganPln').val(response.id_pelanggan_pln);
+                        $('#formEditFasilitasTarip').val(response.tarip);
+                        $('#formEditFasilitasDaya').val(response.daya);
+                        $('#formEditFasilitasNama').val(response.nama);
                         $('#formEditFasilitasAlamat').val(response.alamat);
                         $('#formEditFasilitasLatitude').val(response.latitude);
                         $('#formEditFasilitasLongitude').val(response.longitude);
