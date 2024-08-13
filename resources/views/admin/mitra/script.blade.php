@@ -3,8 +3,8 @@
         $(function() {
             $('#datatable-mitra').DataTable({
                 processing: true,
-                serverSide: true,
-                responsive: true,
+                serverSide: false,
+                responsive: false,
                 ajax: '{{ url('mitra-datatable') }}',
                 columns: [{
                         data: 'id',

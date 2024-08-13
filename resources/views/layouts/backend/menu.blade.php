@@ -146,6 +146,11 @@
                         </a>
                         <ul class="submenu">
                             <li>
+                                <a href="{{ route('laporan.pemantauan') }}"
+                                    class="{{ request()->is('laporan/pemantauan') ? 'active' : '' }}">Laporan
+                                    Pemantauan</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('laporan.perbaikan') }}"
                                     class="{{ request()->is('laporan/perbaikan*') ? 'active' : '' }}">Laporan
                                     perbaikan</a>
@@ -168,7 +173,11 @@
                     <li>
                         <a href="{{ route('kerusakan.input') }}"
                             class="dropdown-toggle no-arrow {{ request()->is('kerusakan/input') ? 'active' : '' }}">
-                            <span class="micon bi bi-plus"></span><span class="mtext">Input Pekerjaan</span>
+                            <span class="micon bi bi-plus"></span><span class="mtext">Input Kerusakan</span>
+                        </a>
+                        <a href="{{ route('pemantauan') }}"
+                            class="dropdown-toggle no-arrow {{ request()->is('pemantauan') ? 'active' : '' }}">
+                            <span class="micon bi bi-plus"></span><span class="mtext">Input Pemantauan</span>
                         </a>
                         <a href="{{ route('kerusakan') }}"
                             class="dropdown-toggle no-arrow {{ request()->is('kerusakan') ? 'active' : '' }}">
@@ -186,6 +195,11 @@
                             <span class="micon bi bi-folder"></span><span class="mtext">Laporan</span>
                         </a>
                         <ul class="submenu">
+                            <li>
+                                <a href="{{ route('laporan.pemantauan') }}"
+                                    class="{{ request()->is('laporan/pemantauan') ? 'active' : '' }}">Laporan
+                                    Pemantauan</a>
+                            </li>
                             <li>
                                 <a href="{{ route('laporan.perbaikan-teknisi') }}"
                                     class="{{ request()->is('laporan/perbaikan-teknisi') ? 'active' : '' }}">Laporan

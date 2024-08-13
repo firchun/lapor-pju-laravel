@@ -37,6 +37,13 @@
 
             <h3 class="my-4 text-center">Data Laporan Kerusakan PJU oleh Masyarakat</h3>
             <div class="row justify-content-center">
+                @if ($kerusakan->count() == 0)
+                    <div class="col-12">
+                        <div class="text-center">
+                            <p class="text-mutted p-2 border">Belum ada laporan masyarakat</p>
+                        </div>
+                    </div>
+                @endif
                 @foreach ($kerusakan as $item)
                     <div class="col-lg-4 col-md-6">
                         <div class="card mb-3 border-primary shadow-lg" style="border-radius: 10px;">

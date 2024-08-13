@@ -32,8 +32,11 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Foto</th>
-                                <th>Nama Fasilitas</th>
                                 <th>Code Fasilitas</th>
+                                <th>Nama Fasilitas</th>
+                                <th>Id Pelanggan</th>
+                                <th>Tarip</th>
+                                <th>Daya</th>
                                 <th>Alamat</th>
                                 <th>Koordinat</th>
                                 <th>Action</th>
@@ -44,8 +47,11 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Foto</th>
-                                <th>Nama Fasilitas</th>
                                 <th>Code Fasilitas</th>
+                                <th>Nama Fasilitas</th>
+                                <th>Id Pelanggan</th>
+                                <th>Tarip</th>
+                                <th>Daya</th>
                                 <th>Alamat</th>
                                 <th>Koordinat</th>
                                 <th>Action</th>

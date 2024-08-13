@@ -10,6 +10,7 @@
                     <span class="d-none d-sm-inline-block">Refresh Data</span>
                 </span>
             </button>
+
         </div>
     </div>
 
@@ -35,13 +36,16 @@
                     </div>
                 </div>
                 <hr>
-                <table id="datatable-kerusakan" class="table table-h0ver  display mb-3">
+                <table id="datatable-pemantauan" class="table table-hover  display mb-3">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Tanggal</th>
-                            <th>Box Control</th>
-                            <th>Tempat</th>
+                            <th>Teknisi</th>
+                            <th>Nama/Alamat</th>
+                            <th>Id Pelanggan</th>
+                            <th>Tunggakan</th>
+                            <th>Tarif/Daya</th>
                             <th>Keterangan</th>
                         </tr>
                     </thead>
@@ -50,8 +54,11 @@
                         <tr>
                             <th>ID</th>
                             <th>Tanggal</th>
-                            <th>Box Control</th>
-                            <th>Tempat</th>
+                            <th>Teknisi</th>
+                            <th>Nama/Alamat</th>
+                            <th>Id Pelanggan</th>
+                            <th>Tunggakan</th>
+                            <th>Tarif/Daya</th>
                             <th>Keterangan</th>
                         </tr>
                     </tfoot>
@@ -63,12 +70,12 @@
 @push('js')
     <script>
         $(function() {
-            var table = $('#datatable-kerusakan').DataTable({
+            var table = $('#datatable-pemantauan').DataTable({
                 processing: true,
                 serverSide: false,
                 responsive: false,
                 ajax: {
-                    url: '{{ url('pemeliharaan-datatable') }}',
+                    url: '{{ url('pemantauan-datatable') }}',
                     data: function(d) {
                         d.date = $('#dateFilter').val();
                     }
@@ -85,21 +92,31 @@
                             return moment(full.created_at).format('DD-MM-YYYY');
                         }
                     },
-
                     {
-                        data: 'box_control.nama',
-                        name: 'box_control.nama'
+                        data: 'user.name',
+                        name: 'user.name'
                     },
                     {
-                        data: 'box_control.tempat',
-                        name: 'box_control.tempat'
+                        data: 'fasilitas.nama',
+                        name: 'fasilitas.nama'
+                    },
+                    {
+                        data: 'fasilitas.id_pelanggan_pln',
+                        name: 'fasilitas.id_pelanggan_pln'
                     },
 
+                    {
+                        data: 'fasilitas.tarip',
+                        name: 'fasilitas.tarip'
+                    },
+                    {
+                        data: 'tunggakan',
+                        name: 'tunggakan'
+                    },
                     {
                         data: 'keterangan',
                         name: 'keterangan'
                     },
-
                 ],
                 dom: 'lBfrtip',
                 buttons: [{
@@ -127,7 +144,6 @@
                     }
                 }]
             });
-
             // Event handler untuk tombol filter
             $('#btnFilter').click(function() {
                 table.ajax.reload();
@@ -138,7 +154,6 @@
                 $('#dateFilter').val(''); // Reset filter tanggal
                 table.ajax.reload();
             });
-
         });
     </script>
     <!-- Moment.js CDN -->

@@ -6,6 +6,7 @@ use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\KerusakanController;
 use App\Http\Controllers\laporanController;
 use App\Http\Controllers\MitraController;
+use App\Http\Controllers\PemantauanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\BoxControl;
@@ -63,6 +64,7 @@ Route::get('/fasilitas/getall', [FasilitasController::class, 'getall'])->name('f
 Auth::routes(['register' => false, 'reset' => false]);
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/grafik', [App\Http\Controllers\HomeController::class, 'grafik'])->name('grafik');
 
     //akun managemen
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -74,6 +76,8 @@ Route::middleware(['auth:web'])->group(function () {
     Route::delete('/customers/delete/{id}',  [CustomerController::class, 'destroy'])->name('customers.delete');
     Route::get('/customers-datatable', [CustomerController::class, 'getCustomersDataTable']);
     Route::get('/pemeliharaan-datatable', [BoxControlController::class, 'getPemeliharaanDataTable']);
+    Route::get('/pemantauan-datatable', [PemantauanController::class, 'getPemantauanDataTable']);
+    Route::get('/laporan/pemantauan', [laporanController::class, 'pemantauan'])->name('laporan.pemantauan');
 });
 Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     //box control managemen
@@ -117,8 +121,10 @@ Route::middleware(['auth:web', 'role:Admin'])->group(function () {
 });
 Route::middleware(['auth:web', 'role:Teknisi'])->group(function () {
     //pemeliharaan managemen
-
-    Route::post('/pemeloharaan/store', [BoxControlController::class, 'store_pemeliharaan'])->name('pemeliharaan.store');
+    Route::get('/pemantauan', [PemantauanController::class, 'index'])->name('pemantauan');
+    Route::post('/pemantauan/store', [PemantauanController::class, 'store'])->name('pemantauan.store');
+    //pemeliharaan managemen
+    Route::post('/pemeliharaan/store', [BoxControlController::class, 'store_pemeliharaan'])->name('pemeliharaan.store');
     //kerusakan managemen
     Route::get('/kerusakan', [KerusakanController::class, 'index'])->name('kerusakan');
     Route::get('/kerusakan/input', [KerusakanController::class, 'input'])->name('kerusakan.input');

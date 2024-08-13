@@ -6,6 +6,7 @@ use App\Models\Kerusakan;
 use App\Models\Perbaikan;
 use App\Models\PerbaikanSelesai;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -13,6 +14,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class laporanController extends Controller
 {
+    public function pemantauan()
+    {
+        $data = [
+            'title' => 'Laporan pemantauan ',
+        ];
+        return view('admin.laporan.pemantauan', $data);
+    }
     public function teknisi()
     {
         $data = [
@@ -77,10 +85,14 @@ class laporanController extends Controller
         return DataTables::of($perbaikan)
             ->make(true);
     }
-    public function getAkhirTeknisiDataTable()
+    public function getAkhirTeknisiDataTable(Request $request)
     {
         $perbaikan = PerbaikanSelesai::with(['kerusakan'])->where('id_user', Auth::id())->orderByDesc('id');
+        if ($request->has('date') && !empty($request->date)) {
+            $date = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y-m-d');
 
+            $perbaikan->whereDate('created_at', $date);
+        }
         return DataTables::of($perbaikan)
             ->addColumn('code', function ($perbaikan) {
                 return $perbaikan->kerusakan->fasilitas->code;

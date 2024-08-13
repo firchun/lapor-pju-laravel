@@ -7,7 +7,13 @@
             <button class="btn btn-secondary refresh btn-default" type="button">
                 <span>
                     <i class="bi bi-arrow-clockwise me-sm-1"> </i>
-                    <span class="d-none d-sm-inline-block">Refresh Data</span>
+                    <span class="d-none d-sm-inline-block"></span>
+                </span>
+            </button>
+            <button class="btn btn-success btn-default create-new" type="button">
+                <span>
+                    <i class="bi bi-plus me-sm-1"> </i>
+                    <span class="d-none d-sm-inline-block">Tambah Data</span>
                 </span>
             </button>
         </div>
@@ -19,30 +25,16 @@
                 <div class="card-body">
                     <h2>{{ $title }}</h2>
                 </div>
-                <hr>
-                <div class="m-2">
-                    <div class="my-2">
-                        <label>Filter data : </label>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <input type="date" class="form-control" name="date" id="dateFilter">
-                        </div>
-                        <div class="col-md-2">
-                            <button type="button" class="btn btn-primary" id="btnFilter"><i
-                                    class="bi bi-filter"></i>Filter</button>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <table id="datatable-kerusakan" class="table table-h0ver  display mb-3">
+                <table id="datatable-pemantauan" class="table table-hover  display mb-3">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Tanggal</th>
                             <th>Teknisi</th>
-                            <th>Box Control</th>
-                            <th>Tempat</th>
+                            <th>Nama/Alamat</th>
+                            <th>Id Pelanggan</th>
+                            <th>Tunggakan</th>
+                            <th>Tarif/Daya</th>
                             <th>Keterangan</th>
                         </tr>
                     </thead>
@@ -52,8 +44,10 @@
                             <th>ID</th>
                             <th>Tanggal</th>
                             <th>Teknisi</th>
-                            <th>Box Control</th>
-                            <th>Tempat</th>
+                            <th>Nama/Alamat</th>
+                            <th>Id Pelanggan</th>
+                            <th>Tunggakan</th>
+                            <th>Tarif/Daya</th>
                             <th>Keterangan</th>
                         </tr>
                     </tfoot>
@@ -61,20 +55,16 @@
             </div>
         </div>
     </div>
+    @include('admin.pemantauan.components.modal')
 @endsection
 @push('js')
     <script>
         $(function() {
-            var table = $('#datatable-kerusakan').DataTable({
+            $('#datatable-pemantauan').DataTable({
                 processing: true,
                 serverSide: false,
                 responsive: false,
-                ajax: {
-                    url: '{{ url('pemeliharaan-datatable') }}',
-                    data: function(d) {
-                        d.date = $('#dateFilter').val();
-                    }
-                },
+                ajax: '{{ url('pemantauan-datatable') }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -92,58 +82,56 @@
                         name: 'user.name'
                     },
                     {
-                        data: 'box_control.nama',
-                        name: 'box_control.nama'
+                        data: 'fasilitas.nama',
+                        name: 'fasilitas.nama'
                     },
                     {
-                        data: 'box_control.tempat',
-                        name: 'box_control.tempat'
+                        data: 'fasilitas.id_pelanggan_pln',
+                        name: 'fasilitas.id_pelanggan_pln'
                     },
 
+                    {
+                        data: 'fasilitas.tarip',
+                        name: 'fasilitas.tarip'
+                    },
+                    {
+                        data: 'tunggakan',
+                        name: 'tunggakan'
+                    },
                     {
                         data: 'keterangan',
                         name: 'keterangan'
                     },
 
                 ],
-                dom: 'lBfrtip',
-                buttons: [{
-                    extend: 'pdf',
-                    text: '<i class=" i bi-file-pdf"> </i> PDF ',
-                    className: 'btn-danger mx-3',
-                    orientation: 'potrait',
-                    title: '{{ $title }}',
-                    pageSize: 'A4',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4]
-                    },
-                    customize: function(doc) {
-                        doc.defaultStyle.fontSize = 8;
-                        doc.styles.tableHeader.fontSize = 8;
-                        doc.styles.tableHeader.fillColor = '#2a6908';
-                    },
-                    header: true
-                }, {
-                    extend: 'excelHtml5',
-                    text: '<i class="bi bi-file-excel"></i> Excel',
-                    className: 'btn-success',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4]
-                    }
-                }]
-            });
-            // Event handler untuk tombol filter
-            $('#btnFilter').click(function() {
-                table.ajax.reload();
+
             });
 
-            // Event handler untuk tombol refresh
             $('.refresh').click(function() {
-                $('#dateFilter').val(''); // Reset filter tanggal
-                table.ajax.reload();
+                $('#datatable-pemantauan').DataTable().ajax.reload();
             });
-
-
+            $('.create-new').click(function() {
+                $('#create').modal('show');
+            });
+            $('#createCustomerBtn').click(function() {
+                var formData = $('#createUserForm').serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '/pemantauan/store',
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        alert(response.message);
+                        $('#datatable-pemantauan').DataTable().ajax.reload();
+                        $('#create').modal('hide');
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan: ' + xhr.responseText);
+                    }
+                });
+            });
         });
     </script>
     <!-- Moment.js CDN -->

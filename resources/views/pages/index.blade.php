@@ -109,6 +109,11 @@
 
 
         <div class="container-fluid">
+            @if (App\Models\Kerusakan::count() == 0)
+                <div class="text-center my-4">
+                    <p>Belum ada laporan masyarakat</p>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-12 testimonial-wrap">
                     @foreach (App\Models\Kerusakan::with(['fasilitas'])->latest()->whereNull('id_user')->limit(5)->get() as $item)

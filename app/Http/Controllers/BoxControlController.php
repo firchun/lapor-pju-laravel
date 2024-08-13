@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BoxControl;
 use App\Models\Pemeliharaan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -35,11 +36,16 @@ class BoxControlController extends Controller
             ->rawColumns(['action', 'foto'])
             ->make(true);
     }
-    public function getPemeliharaanDataTable()
+    public function getPemeliharaanDataTable(Request $request)
     {
         $customers = Pemeliharaan::with(['box_control', 'user'])->orderByDesc('id');
         if (Auth::user()->role == 'Teknisi') {
             $customers = $customers->where('id_user', Auth::id());
+        }
+        if ($request->has('date') && !empty($request->date)) {
+            $date = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y-m-d');
+
+            $customers->whereDate('created_at', $date);
         }
         return DataTables::of($customers)
 

@@ -9,6 +9,7 @@ use App\Models\Kerusakan;
 use App\Models\Perbaikan;
 use App\Models\PerbaikanMitra;
 use App\Models\PerbaikanSelesai;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -239,10 +240,14 @@ class KerusakanController extends Controller
         }
     }
 
-    public function getKerusakanDataTable()
+    public function getKerusakanDataTable(Request $request)
     {
         $Kerusakan = Kerusakan::with(['fasilitas'])->orderByDesc('id');
+        if ($request->has('date') && !empty($request->date)) {
+            $date = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y-m-d');
 
+            $Kerusakan->whereDate('created_at', $date);
+        }
         return DataTables::of($Kerusakan)
             ->addColumn('action', function ($Kerusakan) {
                 return view('admin.kerusakan.components.actions', compact('Kerusakan'));

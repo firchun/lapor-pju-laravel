@@ -167,12 +167,24 @@
                     },
 
                     {
+                        data: 'code',
+                        name: 'code'
+                    },
+                    {
                         data: 'nama',
                         name: 'nama'
                     },
                     {
-                        data: 'code',
-                        name: 'code'
+                        data: 'id_pelanggan_pln',
+                        name: 'id_pelanggan_pln'
+                    },
+                    {
+                        data: 'tarip',
+                        name: 'tarip'
+                    },
+                    {
+                        data: 'daya',
+                        name: 'daya'
                     },
 
 

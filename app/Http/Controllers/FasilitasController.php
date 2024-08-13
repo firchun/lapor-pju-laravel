@@ -41,10 +41,10 @@ class FasilitasController extends Controller
             })
             ->addColumn('koordinat', function ($Fasilitas) {
                 $url = 'https://www.google.com/maps?q=' . $Fasilitas->latitude . ',' . $Fasilitas->longitude;
-                return '<a href="' . $url . '" target="__blank">' . $Fasilitas->latitude . ',' . $Fasilitas->longitude . '</a>';
+                return '<a href="' . $url . '" target="__blank">' . $Fasilitas->latitude . ' , ' . $Fasilitas->longitude . '</a>';
             })
             ->addColumn('foto', function ($Fasilitas) {
-                return '<img src="' . Storage::url($Fasilitas->foto) . '" style="height:50px;width:50px;object-fit:cover;">';
+                return '<a href="' . Storage::url($Fasilitas->foto) . '" target="__blank"><img src="' . Storage::url($Fasilitas->foto) . '" style="height:50px;width:50px;object-fit:cover;"><a/>';
             })
             ->rawColumns(['action', 'koordinat', 'foto'])
             ->make(true);

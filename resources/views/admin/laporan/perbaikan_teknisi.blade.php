@@ -19,6 +19,22 @@
                 <div class="card-body">
                     <h2>{{ $title }}</h2>
                 </div>
+                <hr>
+                <div class="m-2">
+                    <div class="my-2">
+                        <label>Filter data : </label>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <input type="date" class="form-control" name="date" id="dateFilter">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" id="btnFilter"><i
+                                    class="bi bi-filter"></i>Filter</button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
                 <table id="datatable-kerusakan" class="table table-h0ver  display mb-3">
                     <thead>
                         <tr>
@@ -49,11 +65,16 @@
 @push('js')
     <script>
         $(function() {
-            $('#datatable-kerusakan').DataTable({
+            var table = $('#datatable-kerusakan').DataTable({
                 processing: true,
                 serverSide: false,
                 responsive: false,
-                ajax: '{{ url('laporan/datatable-perbaikan-teknisi') }}',
+                ajax: {
+                    url: '{{ url('laporan/datatable-perbaikan-teknisi') }}',
+                    data: function(d) {
+                        d.date = $('#dateFilter').val();
+                    }
+                },
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -112,8 +133,15 @@
                 }]
             });
 
+            // Event handler untuk tombol filter
+            $('#btnFilter').click(function() {
+                table.ajax.reload();
+            });
+
+            // Event handler untuk tombol refresh
             $('.refresh').click(function() {
-                $('#datatable-kerusakan').DataTable().ajax.reload();
+                $('#dateFilter').val(''); // Reset filter tanggal
+                table.ajax.reload();
             });
 
         });
