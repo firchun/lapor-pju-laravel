@@ -4,7 +4,7 @@
             $('#datatable-mitra').DataTable({
                 processing: true,
                 serverSide: false,
-                responsive: false,
+                responsive: true,
                 ajax: '{{ url('mitra-datatable') }}',
                 columns: [{
                         data: 'id',

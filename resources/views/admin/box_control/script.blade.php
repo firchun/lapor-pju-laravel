@@ -4,7 +4,7 @@
             $('#datatable-box').DataTable({
                 processing: true,
                 serverSide: false,
-                responsive: false,
+                responsive: true,
                 ajax: '{{ url('box-control-datatable') }}',
                 columns: [{
                         data: 'id',
