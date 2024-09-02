@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kerusakan;
+use App\Models\Pemantauan;
 use App\Models\Perbaikan;
 use App\Models\PerbaikanSelesai;
 use App\Models\User;
@@ -107,5 +108,23 @@ class laporanController extends Controller
         $selesai = PerbaikanSelesai::where('id_kerusakan', $id)->first();
         $pdf = PDF::loadview('admin/laporan/detail_laporan', ['data' => $data, 'perbaikan' => $perbaikan, 'selesai' => $selesai])->setPaper("A4", "portrait");
         return $pdf->stream('laporan_perbaikan_' . date('His') . '.pdf');
+    }
+    public function print_pemantauan(Request $request)
+    {
+        $Pemantauan = Pemantauan::with(['user', 'fasilitas']);
+        if (Auth::user()->role == 'Teknisi') {
+            $Pemantauan->where('id_user', Auth::id());
+        }
+        $tanggal = 'Semua Tanggal';
+        if ($request->has('date') && !empty($request->date)) {
+            $date = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y-m-d');
+
+            $Pemantauan->whereDate('created_at', $date);
+            $tanggal =  Carbon::createFromFormat('Y-m-d', $request->date)->format('d-m-Y');
+        }
+        $data =  $Pemantauan->get();
+
+        $pdf = PDF::loadview('admin/laporan/pdf/pemantauan', ['data' => $data, 'tanggal' => $tanggal])->setPaper("A4", "portrait");
+        return $pdf->stream('laporan_pemantauan_' . date('His') . '.pdf');
     }
 }

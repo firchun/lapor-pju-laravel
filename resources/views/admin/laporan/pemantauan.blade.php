@@ -41,11 +41,12 @@
                         <tr>
                             <th>ID</th>
                             <th>Tanggal</th>
-                            <th>Teknisi</th>
-                            <th>Nama/Alamat</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
                             <th>Id Pelanggan</th>
                             <th>Tunggakan</th>
-                            <th>Tarif/Daya</th>
+                            <th>Tarif</th>
+                            <th>Daya</th>
                             <th>Keterangan</th>
                         </tr>
                     </thead>
@@ -54,11 +55,12 @@
                         <tr>
                             <th>ID</th>
                             <th>Tanggal</th>
-                            <th>Teknisi</th>
-                            <th>Nama/Alamat</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
                             <th>Id Pelanggan</th>
                             <th>Tunggakan</th>
-                            <th>Tarif/Daya</th>
+                            <th>Tarif</th>
+                            <th>Daya</th>
                             <th>Keterangan</th>
                         </tr>
                     </tfoot>
@@ -92,27 +94,32 @@
                             return moment(full.created_at).format('DD-MM-YYYY');
                         }
                     },
-                    {
-                        data: 'user.name',
-                        name: 'user.name'
-                    },
+
                     {
                         data: 'fasilitas.nama',
                         name: 'fasilitas.nama'
                     },
                     {
+                        data: 'fasilitas.alamat',
+                        name: 'fasilitas.alamat'
+                    },
+                    {
                         data: 'fasilitas.id_pelanggan_pln',
                         name: 'fasilitas.id_pelanggan_pln'
-                    },
-
-                    {
-                        data: 'fasilitas.tarip',
-                        name: 'fasilitas.tarip'
                     },
                     {
                         data: 'tunggakan',
                         name: 'tunggakan'
                     },
+                    {
+                        data: 'fasilitas.tarip',
+                        name: 'fasilitas.tarip'
+                    },
+                    {
+                        data: 'fasilitas.daya',
+                        name: 'fasilitas.daya'
+                    },
+
                     {
                         data: 'keterangan',
                         name: 'keterangan'
@@ -120,29 +127,25 @@
                 ],
                 dom: 'lBfrtip',
                 buttons: [{
-                    extend: 'pdf',
-                    text: '<i class=" i bi-file-pdf"> </i> PDF ',
-                    className: 'btn-danger mx-3',
-                    orientation: 'potrait',
-                    title: '{{ $title }}',
-                    pageSize: 'A4',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4]
+                        extend: 'pdf',
+                        text: '<i class=" i bi-file-pdf"> </i> PDF ',
+                        className: 'btn-danger mx-3',
+                        action: function(e, dt, button, config) {
+                            var date = document.getElementById('dateFilter').value;
+                            var url = '{{ url('laporan/print-pemantauan') }}' + (date ? '?date=' +
+                                encodeURIComponent(date) : '');
+                            window.open(url, '_blank');
+                        }
                     },
-                    customize: function(doc) {
-                        doc.defaultStyle.fontSize = 8;
-                        doc.styles.tableHeader.fontSize = 8;
-                        doc.styles.tableHeader.fillColor = '#2a6908';
-                    },
-                    header: true
-                }, {
-                    extend: 'excelHtml5',
-                    text: '<i class="bi bi-file-excel"></i> Excel',
-                    className: 'btn-success',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4]
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="bi bi-file-excel"></i> Excel',
+                        className: 'btn-success',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        }
                     }
-                }]
+                ]
             });
             // Event handler untuk tombol filter
             $('#btnFilter').click(function() {

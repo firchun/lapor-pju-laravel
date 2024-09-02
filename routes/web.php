@@ -78,6 +78,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/pemeliharaan-datatable', [BoxControlController::class, 'getPemeliharaanDataTable']);
     Route::get('/pemantauan-datatable', [PemantauanController::class, 'getPemantauanDataTable']);
     Route::get('/laporan/pemantauan', [laporanController::class, 'pemantauan'])->name('laporan.pemantauan');
+    Route::get('/laporan/print-pemantauan', [laporanController::class, 'print_pemantauan'])->name('laporan.print_pemantaun');
 });
 Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     //box control managemen
@@ -135,7 +136,7 @@ Route::middleware(['auth:web', 'role:Teknisi'])->group(function () {
     Route::get('/kerusakan/update-status',  [KerusakanController::class, 'updateStatus'])->name('kerusakan.update-status');
     Route::get('/kerusakan/detail/{id}',  [KerusakanController::class, 'show'])->name('kerusakan.detail');
     Route::get('/kerusakan/terima/{id}',  [KerusakanController::class, 'terima'])->name('kerusakan.terima');
-    Route::get('/kerusakan/tolak/{id}',  [KerusakanController::class, 'tolak'])->name('kerusakan.terima');
+    Route::get('/kerusakan/tolak/{id}',  [KerusakanController::class, 'tolak'])->name('kerusakan.tolak');
     Route::get('/kerusakan-datatable', [KerusakanController::class, 'getKerusakanDataTable']);
     //laporan managemen
     Route::get('/laporan/pemeliharaan-teknisi', [laporanController::class, 'pemeliharaan_teknisi'])->name('laporan.pemeliharaan-teknisi');
