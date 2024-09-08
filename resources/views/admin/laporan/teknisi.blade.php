@@ -73,19 +73,10 @@
                     extend: 'pdf',
                     text: '<i class=" i bi-file-pdf"> </i> PDF ',
                     className: 'btn-danger mx-3',
-                    orientation: 'potrait',
-                    title: '{{ $title }}',
-                    pageSize: 'A4',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3]
-                    },
-                    customize: function(doc) {
-                        doc.defaultStyle.fontSize = 8;
-                        doc.styles.tableHeader.fontSize = 8;
-                        doc.styles.tableHeader.fillColor = '#2a6908';
-                    },
-                    header: true
-                }, {
+                    action: function(e, dt, button, config) {
+                        window.open('{{ route('laporan.print-teknisi') }}', '_blank');
+                    }
+                }, , {
                     extend: 'excelHtml5',
                     text: '<i class="bi bi-file-excel"></i> Excel',
                     className: 'btn-success',

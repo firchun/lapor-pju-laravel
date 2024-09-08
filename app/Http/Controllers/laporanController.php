@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kerusakan;
 use App\Models\Pemantauan;
+use App\Models\Pemeliharaan;
 use App\Models\Perbaikan;
 use App\Models\PerbaikanSelesai;
 use App\Models\User;
@@ -126,5 +127,34 @@ class laporanController extends Controller
 
         $pdf = PDF::loadview('admin/laporan/pdf/pemantauan', ['data' => $data, 'tanggal' => $tanggal])->setPaper("A4", "portrait");
         return $pdf->stream('laporan_pemantauan_' . date('His') . '.pdf');
+    }
+    public function print_teknisi()
+    {
+        $teknisi = User::where('role', 'Teknisi')->orderByDesc('id')->get();
+
+        $pdf = PDF::loadview('admin/laporan/pdf/teknisi', ['data' => $teknisi])->setPaper("A4", "portrait");
+        return $pdf->stream('laporan_teknisi_' . date('His') . '.pdf');
+    }
+    public function print_pemeliharaan(Request $request)
+    {
+        $pemeliharaan = Pemeliharaan::with(['box_control', 'user'])->orderByDesc('id');
+
+        $tanggal = 'Semua Pemeliharaan';
+        $tahun = null;
+        if (Auth::user()->role == 'Teknisi') {
+            $pemeliharaan = $pemeliharaan->where('id_user', Auth::id());
+        }
+        if ($request->has('date') && !empty($request->date)) {
+            $date = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y-m-d');
+
+            $pemeliharaan->whereDate('created_at', $date);
+
+            $tanggal = Carbon::createFromFormat('Y-m-d', $request->date)->format('d F Y');
+            $tahun = Carbon::createFromFormat('Y-m-d', $request->date)->year;
+        }
+        $data = $pemeliharaan->get();
+
+        $pdf = PDF::loadview('admin/laporan/pdf/pemeliharaan', ['data' => $data, 'tanggal' => $tanggal, 'tahun' => $tahun])->setPaper("A4", "portrait");
+        return $pdf->stream('laporan_pemeliharaan_' . date('His') . '.pdf');
     }
 }

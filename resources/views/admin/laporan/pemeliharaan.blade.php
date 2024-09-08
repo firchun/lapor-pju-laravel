@@ -111,18 +111,12 @@
                     extend: 'pdf',
                     text: '<i class=" i bi-file-pdf"> </i> PDF ',
                     className: 'btn-danger mx-3',
-                    orientation: 'potrait',
-                    title: '{{ $title }}',
-                    pageSize: 'A4',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4]
-                    },
-                    customize: function(doc) {
-                        doc.defaultStyle.fontSize = 8;
-                        doc.styles.tableHeader.fontSize = 8;
-                        doc.styles.tableHeader.fillColor = '#2a6908';
-                    },
-                    header: true
+                    action: function(e, dt, button, config) {
+                        var date = document.getElementById('dateFilter').value;
+                        var url = '{{ url('laporan/print-pemeliharaan') }}' + (date ? '?date=' +
+                            encodeURIComponent(date) : '');
+                        window.open(url, '_blank');
+                    }
                 }, {
                     extend: 'excelHtml5',
                     text: '<i class="bi bi-file-excel"></i> Excel',

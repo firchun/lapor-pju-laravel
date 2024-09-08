@@ -79,6 +79,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/pemantauan-datatable', [PemantauanController::class, 'getPemantauanDataTable']);
     Route::get('/laporan/pemantauan', [laporanController::class, 'pemantauan'])->name('laporan.pemantauan');
     Route::get('/laporan/print-pemantauan', [laporanController::class, 'print_pemantauan'])->name('laporan.print_pemantaun');
+    Route::get('/laporan/print-pemeliharaan', [laporanController::class, 'print_pemeliharaan'])->name('laporan.print_pemeliharaan');
 });
 Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     //box control managemen
@@ -111,6 +112,7 @@ Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     Route::get('/laporan-teknisi-datatable', [laporanController::class, 'getTeknisiDataTable']);
     Route::get('/laporan-kerusakan-datatable', [KerusakanController::class, 'getKerusakanDataTable']);
     Route::get('/laporan/detail-laporan/{id}', [laporanController::class, 'detail_laporan'])->name('laporan.detail-laporan');
+    Route::get('/laporan/print-teknisi', [laporanController::class, 'print_teknisi'])->name('laporan.print-teknisi');
     //user managemen
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::get('/users/teknisi', [UserController::class, 'teknisi'])->name('users.teknisi');
