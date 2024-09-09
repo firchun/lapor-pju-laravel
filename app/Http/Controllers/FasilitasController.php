@@ -31,6 +31,11 @@ class FasilitasController extends Controller
         $data = Fasilitas::all();
         return response()->json($data);
     }
+    public function getCode($code)
+    {
+        $data = Fasilitas::where('code', $code)->first();
+        return response()->json($data);
+    }
     public function getFasilitasDataTable()
     {
         $Fasilitas = Fasilitas::orderByDesc('id');

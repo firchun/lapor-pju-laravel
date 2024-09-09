@@ -60,6 +60,7 @@ Route::get('/lapor-kerusakan/{code}', function ($code) {
     return view('pages.lapor_kerusakan', $data);
 });
 Route::post('/kerusakan/store',  [KerusakanController::class, 'store'])->name('kerusakan.store');
+Route::get('/fasilitas/get-code/{code}', [FasilitasController::class, 'getCode'])->name('fasilitas.get-code');
 Route::get('/fasilitas/getall', [FasilitasController::class, 'getall'])->name('fasilitas.getall');
 Auth::routes(['register' => false, 'reset' => false]);
 Route::middleware(['auth:web'])->group(function () {
