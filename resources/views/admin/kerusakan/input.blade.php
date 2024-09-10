@@ -17,7 +17,7 @@
                         <input type="hidden" id="fasilitasId" class="form-control" readonly>
 
                         <div class="mb-3">
-                            <label>Pilih Fasilitas</label>
+                            <label>Code Fasilitas</label>
                             <input type="text" id="code" class="form-control" readonly>
                         </div>
                         <div class="row">

@@ -3,8 +3,8 @@
         $(function() {
             $('#datatable-users').DataTable({
                 processing: true,
-                serverSide: true,
-                responsive: true,
+                serverSide: false,
+                responsive: false,
                 ajax: '{{ url('users-datatable', $role) }}',
                 columns: [{
                         data: 'id',
@@ -31,7 +31,10 @@
                         data: 'action',
                         name: 'action'
                     }
-                ]
+                ],
+                scrollX: true, // Enable horizontal scroll
+                scrollCollapse: true,
+                paging: true
             });
             $('.refresh').click(function() {
                 $('#datatable-users').DataTable().ajax.reload();

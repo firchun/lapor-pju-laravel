@@ -200,7 +200,10 @@
                         data: 'action',
                         name: 'action'
                     }
-                ]
+                ],
+                scrollX: true, // Enable horizontal scroll
+                scrollCollapse: true,
+                paging: true
             });
             $('.create-new').click(function() {
                 $('#create').modal('show');

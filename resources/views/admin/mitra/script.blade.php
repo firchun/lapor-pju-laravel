@@ -4,7 +4,7 @@
             $('#datatable-mitra').DataTable({
                 processing: true,
                 serverSide: false,
-                responsive: true,
+                responsive: false,
                 ajax: '{{ url('mitra-datatable') }}',
                 columns: [{
                         data: 'id',
@@ -32,7 +32,10 @@
                         data: 'action',
                         name: 'action'
                     }
-                ]
+                ],
+                scrollX: true, // Enable horizontal scroll
+                scrollCollapse: true,
+                paging: true
             });
             $('.create-new').click(function() {
                 $('#create').modal('show');

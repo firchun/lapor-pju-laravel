@@ -101,6 +101,9 @@
                     },
 
                 ],
+                scrollX: true, // Enable horizontal scroll
+                scrollCollapse: true,
+                paging: true,
                 dom: 'lBfrtip',
                 buttons: [{
                     extend: 'pdf',

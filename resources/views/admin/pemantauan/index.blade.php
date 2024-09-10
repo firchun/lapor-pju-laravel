@@ -25,33 +25,35 @@
                 <div class="card-body">
                     <h2>{{ $title }}</h2>
                 </div>
-                <table id="datatable-pemantauan" class="table table-hover  display mb-3">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tanggal</th>
-                            <th>Teknisi</th>
-                            <th>Nama/Alamat</th>
-                            <th>Id Pelanggan</th>
-                            <th>Tunggakan</th>
-                            <th>Tarif/Daya</th>
-                            <th>Keterangan</th>
-                        </tr>
-                    </thead>
+                <div>
+                    <table id="datatable-pemantauan" class="table table-hover  display mb-3">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Teknisi</th>
+                                <th>Nama/Alamat</th>
+                                <th>Id Pelanggan</th>
+                                <th>Tunggakan</th>
+                                <th>Tarif/Daya</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
 
-                    <tfoot>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tanggal</th>
-                            <th>Teknisi</th>
-                            <th>Nama/Alamat</th>
-                            <th>Id Pelanggan</th>
-                            <th>Tunggakan</th>
-                            <th>Tarif/Daya</th>
-                            <th>Keterangan</th>
-                        </tr>
-                    </tfoot>
-                </table>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Teknisi</th>
+                                <th>Nama/Alamat</th>
+                                <th>Id Pelanggan</th>
+                                <th>Tunggakan</th>
+                                <th>Tarif/Daya</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -104,6 +106,9 @@
                     },
 
                 ],
+                scrollX: true, // Enable horizontal scroll
+                scrollCollapse: true,
+                paging: true
 
             });
 
