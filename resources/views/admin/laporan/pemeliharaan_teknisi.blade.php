@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <hr>
-                <table id="datatable-kerusakan" class="table table-h0ver  display mb-3">
+                <table id="datatable-kerusakan" class="table table-h0ver  display mb-3" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>ID</th>

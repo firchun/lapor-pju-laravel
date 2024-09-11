@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <hr>
-                <table id="datatable-pemantauan" class="table table-hover  display mb-3">
+                <table id="datatable-pemantauan" class="table table-hover  display mb-3" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>ID</th>

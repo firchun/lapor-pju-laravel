@@ -25,7 +25,7 @@
                 <div class="card-body">
                     <h2>{{ $title }}</h2>
                 </div>
-                <table id="datatable-users" class="table table-hover display">
+                <table id="datatable-users" class="table table-hover display" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>ID</th>

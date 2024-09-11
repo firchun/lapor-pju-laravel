@@ -27,7 +27,7 @@
                 </div>
                 <div class="table-responsive">
 
-                    <table id="datatable-fasilitas" class="table table-hover  display mb-3">
+                    <table id="datatable-fasilitas" class="table table-hover  display mb-3" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th>ID</th>

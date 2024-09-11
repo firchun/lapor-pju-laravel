@@ -165,8 +165,6 @@
                                     class="{{ request()->is('laporan/pemeliharaan*') ? 'active' : '' }}">Laporan
                                     Pemeliharaan Box Control</a>
                             </li>
-
-
                         </ul>
                     </li>
                 @else
@@ -186,8 +184,8 @@
                         </a>
                         <a href="{{ route('kerusakan.update-status') }}"
                             class="dropdown-toggle no-arrow {{ request()->is('kerusakan/update-status*') ? 'active' : '' }}">
-                            <span class="micon bi bi-pencil-square"></span><span class="mtext">Update
-                                Pekerjaan</span>
+                            <span class="micon bi bi-pencil-square"></span><span class="mtext">update pekerjaan
+                                laporan masyarakat</span>
                         </a>
                     </li>
                     <li class="dropdown">

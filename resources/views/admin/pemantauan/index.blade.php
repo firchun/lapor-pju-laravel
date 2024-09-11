@@ -26,7 +26,7 @@
                     <h2>{{ $title }}</h2>
                 </div>
                 <div>
-                    <table id="datatable-pemantauan" class="table table-hover  display mb-3">
+                    <table id="datatable-pemantauan" class="table table-hover  display mb-3" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -106,9 +106,7 @@
                     },
 
                 ],
-                scrollX: true, // Enable horizontal scroll
-                scrollCollapse: true,
-                paging: true
+                scrollX: true,
 
             });
 
